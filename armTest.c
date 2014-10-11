@@ -6,6 +6,7 @@
 
 task main()
 {
+<<<<<<< HEAD
 	motor[motorD] =  100;
 	motor[motorE] = -100;
 	wait1Msec(750);
@@ -14,4 +15,10 @@ task main()
 	motor[motorE] = 20;
 	wait1Msec(750);
 
+=======
+	motor[motorD] = 100;
+	motor[motorE] = 100;
+	wait1Msec(1500);
+	//This is a test
+>>>>>>> origin/master
 }
