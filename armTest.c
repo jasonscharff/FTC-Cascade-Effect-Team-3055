@@ -9,4 +9,5 @@ task main()
 	motor[motorD] = 100;
 	motor[motorE] = 100;
 	wait1Msec(1500);
+	//This is a test
 }
