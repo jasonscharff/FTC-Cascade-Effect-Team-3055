@@ -6,12 +6,23 @@
 
 task main()
 {
+	/*
 	motor[motorD] =  100;
-	motor[motorE] = -100;
-	wait1Msec(750);
+//	motor[motorE] = -100;
+	wait1Msec(570);
 
-	motor[motorD] = -20;
-	motor[motorE] = 20;
-	wait1Msec(750);
+	motor[motorD] = -7;
+	motor[motorE] = 7;
+	wait1Msec(2000);
+
+	*/
+
+	motor[motorE] = 100;
+	motor[motorD] = 100;
+	wait1Msec(1000);
+	motor[motorE] = -100;
+	motor[motorD] = -100;
+	wait1Msec(1000);
+
 
 }
