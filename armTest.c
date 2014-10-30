@@ -17,12 +17,12 @@ task main()
 
 	*/
 
-	motor[motorE] = 100;
-	motor[motorD] = 100;
-	wait1Msec(1000);
 	motor[motorE] = -100;
 	motor[motorD] = -100;
-	wait1Msec(1000);
+	wait1Msec(1050);
+	motor[motorE] = 30;
+	motor[motorD] = 30;
+	wait1Msec(1200);
 
 
 }
