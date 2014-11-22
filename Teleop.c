@@ -44,16 +44,82 @@ task main()
 	while (true)
 	{	
 
-		if ((abs(joystick.joy1_x2) > THRESHOLD) || (abs(joystick.joy1_y2) > THRESHOLD))
+		if ((abs(joystick.joy1_x1) > THRESHOLD) || (abs(joystick.joy1_y1) > THRESHOLD))
 		{
-			motor[leftWheel] =  (((float)joystick.joy1_y2/MOTOR_SCALAR) - ((float)joystick.joy1_x2/MOTOR_SCALAR))*100;
-			motor[rightWheel] = (((float)joystick.joy1_y2/MOTOR_SCALAR) + ((float)joystick.joy1_x2/MOTOR_SCALAR))*100;
+			motor[leftWheel] =  (((float)joystick.joy1_y1/MOTOR_SCALAR) - ((float)joystick.joy1_x1/MOTOR_SCALAR))*100;
+			motor[rightWheel] = (((float)joystick.joy1_y1/MOTOR_SCALAR) + ((float)joystick.joy1_x1/MOTOR_SCALAR))*100;
 		}
 		else
 		{
 			motor[leftWheel] = 0;
 			motor[rightWheel] = 0;
 		}
+
+		if (joy2Btn(0))
+		{
+			adjustDistanceToSmall();
+			throw();
+		}
+		else if (joy2Btn(2))
+		{
+			adjustDistancetoMedium();
+			throw();
+		}	
+		else if (joy2Btn(3))
+		{
+			adjustDistancetoLarge();
+			throw();
+		}
+		else if (joy2Btn(7))
+		{
+			backwards();
+		}
+		else if (joy2Btn(5))
+		{
+			forwards();
+		}	
 	}	
 
 }
+
+void adjustDistanceToSmall()
+{
+
+}
+
+void adjustDistancetoMedium()
+{
+
+}
+
+void adjustDistancetoLarge()
+{
+
+}
+
+void throw()
+{
+	motor[armMotor] = 100;
+	wait1Msec(800);
+	motor[armMotor] = -12;
+	wait1Msec(1500);
+}
+
+void forwards()
+{
+	motor[motorD] = 30;
+	wait1Msec(1000);
+}
+
+void backwards()
+{
+	motor[motorD] = -10;
+	wait1Msec(500);
+}
+
+
+
+
+
+
+
