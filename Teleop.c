@@ -33,6 +33,7 @@ void initializeRobot()
 {
 	// Place code here to sinitialize servos to starting positions.
 	// Sensors are automatically configured and setup by ROBOTC. They may need a brief time to stabilize.
+	ClearTimer(lawnTimer);
 
 	return;
 }
@@ -55,22 +56,24 @@ void adjustDistancetoLarge()
 void throw()
 {
 	motor[armMotor] = 100;
-	wait1Msec(650);
+	wait1Msec(800);
 	motor[armMotor] = -12;
-	wait1Msec(1100);
+	wait1Msec(1500);
 	motor[armMotor] = 0;
 }
 
 void forwards()
 {
-	motor[motorD] = 30;
+	motor[armMotor] = 30;
 	wait1Msec(1000);
+	motor[armMotor] = 0;
 }
 
 void backwards()
 {
-	motor[motorD] = -10;
+	motor[armMotor] = -10;
 	wait1Msec(500);
+	motor[armMotor] = 0;
 }
 
 
@@ -101,14 +104,14 @@ task main()
 	while (true)
 	{
 		if(turnSpinner == true)
-	  {
-			motor[lawnMower] = 50;
-    }
-    else
-  {
-  	motor[lawnMower] = 0;
-  }
-
+		{
+			motor[lawnMower] = 100;
+		}	
+		else
+		{
+			motor[lawnMower] = 0;
+		}	
+	
 		if ((abs(joystick.joy1_x1) > THRESHOLD) || (abs(joystick.joy1_y1) > THRESHOLD))
 		{
 			motor[leftWheel] =  (((float)joystick.joy1_x1/MOTOR_SCALAR) - ((float)joystick.joy1_y1/MOTOR_SCALAR))*100;
@@ -121,43 +124,44 @@ task main()
 		}
 
 
-
-
-		if (joy1Btn(0))
+		if (joy1Btn(9))
 		{
-			writeDebugStreamLine("Joy Button 0, Throw");
 			adjustDistanceToSmall();
-			throw();
-		}
-		 if (joy1Btn(2))
-		{
-			writeDebugStreamLine("Joy Button 2, Throw");
-			adjustDistancetoMedium();
 			throw();
 		}
 		 if (joy1Btn(3))
 		{
-			writeDebugStreamLine("Joy Button 3, Throw");
+			adjustDistancetoMedium();
+			throw();
+		}
+		 if (joy1Btn(4))
+		{
 			adjustDistancetoLarge();
 			throw();
 		}
-		 if (joy1Btn(7))
+		 if (joy1Btn(8))
 		{
-			writeDebugStreamLine("Joy Button 7, Backwards");
 			backwards();
 		}
-		 if (joy1Btn(5))
+		 if (joy1Btn(6))
 		{
-			writeDebugStreamLine("Joy Button 5, forwards");
 			forwards();
 		}
-
-
-		if (joy1Btn(1))
-   {
-   writeDebugStreamLine("Spinner");
- 	   turnSpinner = true;
-   }
+		if (joy1Btn(2))
+		{
+			if (time1(lawnTimer) > 500)
+			{
+				ClearTimer(lawnTimer);
+				if (turnSpinner == true)
+				{
+					turnSpinner = false;
+				}	
+				else
+				{
+					turnSpinner = true;
+				}	
+			}	
+		}	
 
 	}
 
