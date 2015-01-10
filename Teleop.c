@@ -129,24 +129,54 @@ task main()
 			adjustDistanceToSmall();
 			throw();
 		}
+
 		 if (joy1Btn(3))
 		{
 			adjustDistancetoMedium();
 			throw();
 		}
+
 		 if (joy1Btn(4))
 		{
 			adjustDistancetoLarge();
 			throw();
 		}
+
 		 if (joy1Btn(8))
 		{
 			backwards();
 		}
+
 		 if (joy1Btn(6))
 		{
 			forwards();
 		}
+
+		if (joy1Btn(5))
+		{
+			if (servo[leftServo] == 100)
+			{
+				servo[leftServo] = 50;
+			}
+			else
+			{
+				servo[leftServo] = 100;
+			}	
+			
+		}
+
+		if (joy1Btn(6))
+		{
+			if (servo[rightServo] == 100)
+			{
+				servo[rightServo] = 50;
+			}
+			else
+			{
+				servo[rightServo] = 100;
+			}	
+		}	
+
 		if (joy1Btn(2))
 		{
 			if (time1(lawnTimer) > 500)
