@@ -10,6 +10,15 @@
 
 task main()
 {
-	servo[servo1] = -250;
-	wait1Msec(1000);
+//Right motor, open = 135
+// Right motor, closed = 205
+//Right Motor Launch = 190
+
+//Left Motor, closed = 15
+//Left motor, open = 75
+//Left motor, launch = 30;
+
+	servo[servo1] = 30;
+	wait1Msec(5000);
+
 }
