@@ -81,8 +81,12 @@ void adjustDistancetoLarge()
 
 void throw()
 {
+	int rightBefore = servo[rightServo];
+	int leftBefore = servo[leftServo];
+	
 	servo[rightServo] = rightLaunchPos;
 	servo[leftServo] = leftLaunchPos;
+	
 	wait1Msec(500);
 
 	motor[armMotor] = 100;
@@ -90,6 +94,9 @@ void throw()
 	motor[armMotor] = -12;
 	wait1Msec(1500);
 	motor[armMotor] = 0;
+	
+	servo[rightServo] = rightBefore;
+	servo[leftServo] = leftBefore;
 }
 
 void forwards()
@@ -172,26 +179,26 @@ task main()
 
 		if (joy1Btn(5))
 		{
-			if (servo[leftServo] == 100)
+			if (servo[leftServo] == leftClosed)
 			{
-				servo[leftServo] = 50;
+				servo[leftServo] = leftOpen;
 			}
 			else
 			{
-				servo[leftServo] = 100;
+				servo[leftServo] = leftClosed;
 			}
 
 		}
 
 		if (joy1Btn(6))
 		{
-			if (servo[rightServo] == 100)
+			if (servo[rightServo] == rightClosed)
 			{
-				servo[rightServo] = 50;
+				servo[rightServo] = rightOpen;
 			}
 			else
 			{
-				servo[rightServo] = 100;
+				servo[rightServo] = rightClosed;
 			}
 		}
 
