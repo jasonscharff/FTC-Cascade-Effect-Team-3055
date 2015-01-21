@@ -6,13 +6,13 @@
 #pragma config(Motor,  mtr_S1_C1_2,     rightWheel,    tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_1,     armMotor,      tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_2,     lawnMower,     tmotorTetrix, openLoop)
-#pragma config(Servo,  srvo_S1_C3_1,    rightServo,           tServoStandard)
+#pragma config(Servo,  srvo_S1_C3_1,    leftServo,            tServoStandard)
 #pragma config(Servo,  srvo_S1_C3_2,    servo2,               tServoNone)
 #pragma config(Servo,  srvo_S1_C3_3,    servo3,               tServoNone)
 #pragma config(Servo,  srvo_S1_C3_4,    servo4,               tServoNone)
 #pragma config(Servo,  srvo_S1_C3_5,    servo5,               tServoNone)
 #pragma config(Servo,  srvo_S1_C3_6,    servo6,               tServoNone)
-#pragma config(Servo,  srvo_S2_C1_1,    leftServo,            tServoStandard)
+#pragma config(Servo,  srvo_S2_C1_1,    rightServo,           tServoStandard)
 #pragma config(Servo,  srvo_S2_C1_2,    servo8,               tServoNone)
 #pragma config(Servo,  srvo_S2_C1_3,    servo9,               tServoNone)
 #pragma config(Servo,  srvo_S2_C1_4,    servo10,              tServoNone)
@@ -42,7 +42,7 @@ const int THRESHOLD = 10;
 
 const int rightLaunchPos = 190;
 const int rightClosed = 205;
-const int rightOpen = 135;
+const int rightOpen = 145;
 
 const int leftLaunchPos = 30;
 const int leftOpen = 75;
@@ -83,10 +83,10 @@ void throw()
 {
 	int rightBefore = servo[rightServo];
 	int leftBefore = servo[leftServo];
-	
+
 	servo[rightServo] = rightLaunchPos;
 	servo[leftServo] = leftLaunchPos;
-	
+
 	wait1Msec(500);
 
 	motor[armMotor] = 100;
@@ -94,7 +94,7 @@ void throw()
 	motor[armMotor] = -12;
 	wait1Msec(1500);
 	motor[armMotor] = 0;
-	
+
 	servo[rightServo] = rightBefore;
 	servo[leftServo] = leftBefore;
 }
@@ -121,6 +121,8 @@ void backwards()
 task main()
 {
 	ClearTimer(T1);
+	ClearTimer(T2);
+	ClearTimer(T3);
 	initializeRobot();
 
 
@@ -172,14 +174,16 @@ task main()
 			backwards();
 		}
 
-		 if (joy1Btn(6))
+	/*	 if (joy1Btn(6))
 		{
 			forwards();
-		}
+		}*/
 
 		if (joy1Btn(5))
 		{
-			if (servo[leftServo] == leftClosed)
+			if(time1(T2) > 500)
+		{
+				if (servo[leftServo] == leftClosed)
 			{
 				servo[leftServo] = leftOpen;
 			}
@@ -187,10 +191,18 @@ task main()
 			{
 				servo[leftServo] = leftClosed;
 			}
+			ClearTimer(T2);
+		}
+
+
+
+
 
 		}
 
-		if (joy1Btn(6))
+		if (joy1Btn(7))
+		{
+			if(time1(T3) > 500)
 		{
 			if (servo[rightServo] == rightClosed)
 			{
@@ -200,6 +212,9 @@ task main()
 			{
 				servo[rightServo] = rightClosed;
 			}
+			ClearTimer(T3);
+	}
+
 		}
 
 		if (joy1Btn(2))
