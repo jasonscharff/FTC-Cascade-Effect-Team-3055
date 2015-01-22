@@ -42,7 +42,7 @@ const int THRESHOLD = 10;
 
 const int rightLaunchPos = 190;
 const int rightClosed = 205;
-const int rightOpen = 145;
+const int rightOpen = 135;
 
 const int leftLaunchPos = 30;
 const int leftOpen = 75;
@@ -102,7 +102,7 @@ void throw()
 void forwards()
 {
 	motor[armMotor] = 30;
-	wait1Msec(1000);
+	wait1Msec(300);
 	motor[armMotor] = 0;
 }
 
@@ -120,6 +120,12 @@ void backwards()
 
 task main()
 {
+
+
+
+
+
+
 	ClearTimer(T1);
 	ClearTimer(T2);
 	ClearTimer(T3);
@@ -141,8 +147,8 @@ task main()
 
 		if ((abs(joystick.joy1_x1) > THRESHOLD) || (abs(joystick.joy1_y1) > THRESHOLD))
 		{
-			motor[leftWheel] =  (((float)joystick.joy1_x1/MOTOR_SCALAR) - ((float)joystick.joy1_y1/MOTOR_SCALAR))*100;
-			motor[rightWheel] = (((float)joystick.joy1_x1/MOTOR_SCALAR) + ((float)joystick.joy1_y1/MOTOR_SCALAR))*100;
+			motor[leftWheel] =  (((float)joystick.joy1_x1/MOTOR_SCALAR) - ((float)joystick.joy1_y1/MOTOR_SCALAR * -1))*100;
+			motor[rightWheel] = (((float)joystick.joy1_x1/MOTOR_SCALAR) + ((float)joystick.joy1_y1/MOTOR_SCALAR * -1))*100;
 		}
 		else
 		{
@@ -174,10 +180,10 @@ task main()
 			backwards();
 		}
 
-	/*	 if (joy1Btn(6))
-		{
+		if (joy1Btn(6))
+	  {
 			forwards();
-		}*/
+		}
 
 		if (joy1Btn(5))
 		{
