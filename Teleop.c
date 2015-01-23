@@ -48,8 +48,17 @@ const int leftLaunchPos = 30;
 const int leftOpen = 75;
 const int leftClosed = 15;
 
+const int small_small_Distance = 10;
+const int medium_small_Distance = 10;
+const int large_small_Distance = 10;
+
+const int small_large_Distance = 10;
+const int medium_large_Distance = 10;
+const int large_large_Distance = 10;
+
 
 bool turnSpinner = false;
+bool bigBalls = true;
 
 
 
@@ -64,22 +73,127 @@ void initializeRobot()
 	return;
 }
 
-void adjustDistanceToSmall()
+void adjustDistanceToSmallUsingLarge()
 {
-
+	if(SensorValue(ultrasonicSensor) > small_large_Distance)
+	{
+		while(SensorValue(ultrasonicSensor) > small_large_Distance)
+		{
+			motor[rightWheel] = -20;
+			motor[leftWheel] = -20;
+		}	
+	}
+	else
+	{
+		while(SensorValue(ultrasonicSensor) < small_large_Distance)
+		{
+			motor[rightWheel] = 20;
+			motor[leftWheel] = 20;
+		}	
+	}	
 }
 
-void adjustDistancetoMedium()
+void adjustDistancetoMediumUsingLarge()
 {
-
+	if(SensorValue(ultrasonicSensor) > medium_large_Distance)
+	{
+		while(SensorValue(ultrasonicSensor) > medium_large_Distance)
+		{
+			motor[rightWheel] = -20;
+			motor[leftWheel] = -20;
+		}	
+	}
+	else
+	{
+		while(SensorValue(ultrasonicSensor) < medium_large_Distance)
+		{
+			motor[rightWheel] = 20;
+			motor[leftWheel] = 20;
+		}	
+	}	
 }
 
-void adjustDistancetoLarge()
+void adjustDistancetoLargeUsingLarge()
 {
-
+	if(SensorValue(ultrasonicSensor) > large_large_Distance)
+	{
+		while(SensorValue(ultrasonicSensor) > large_large_Distance)
+		{
+			motor[rightWheel] = -20;
+			motor[leftWheel] = -20;
+		}	
+	}
+	else
+	{
+		while(SensorValue(ultrasonicSensor) < large_large_Distance)
+		{
+			motor[rightWheel] = 20;
+			motor[leftWheel] = 20;
+		}	
+	}	
 }
 
-void throw()
+void adjustDistanceToSmallUsingSmall()
+{
+	if(SensorValue(ultrasonicSensor) > small_small_Distance)
+	{
+		while(SensorValue(ultrasonicSensor) > small_small_Distance)
+		{
+			motor[rightWheel] = -20;
+			motor[leftWheel] = -20;
+		}	
+	}
+	else
+	{
+		while(SensorValue(ultrasonicSensor) < small_small_Distance)
+		{
+			motor[rightWheel] = 20;
+			motor[leftWheel] = 20;
+		}	
+	}	
+}
+
+void adjustDistanceToMediumUsingSmall()
+{
+	if(SensorValue(ultrasonicSensor) > medium_small_Distance)
+	{
+		while(SensorValue(ultrasonicSensor) > medium_small_Distance)
+		{
+			motor[rightWheel] = -20;
+			motor[leftWheel] = -20;
+		}	
+	}
+	else
+	{
+		while(SensorValue(ultrasonicSensor) < medium_small_Distance)
+		{
+			motor[rightWheel] = 20;
+			motor[leftWheel] = 20;
+		}	
+	}	
+}
+
+void adjustDistancetoLargeUsingSmall()
+{
+	if(SensorValue(ultrasonicSensor) > large_small_Distance)
+	{
+		while(SensorValue(ultrasonicSensor) > large_small_Distance)
+		{
+			motor[rightWheel] = -20;
+			motor[leftWheel] = -20;
+		}	
+	}
+	else
+	{
+		while(SensorValue(ultrasonicSensor) < large_small_Distance)
+		{
+			motor[rightWheel] = 20;
+			motor[leftWheel] = 20;
+		}	
+	}	
+}
+
+void throwBig()
 {
 	int rightBefore = servo[rightServo];
 	int leftBefore = servo[leftServo];
@@ -98,6 +212,29 @@ void throw()
 	servo[rightServo] = rightBefore;
 	servo[leftServo] = leftBefore;
 }
+
+//NOT EDITED AT ALL
+void throwSmall()
+{
+	int rightBefore = servo[rightServo];
+	int leftBefore = servo[leftServo];
+
+	servo[rightServo] = rightLaunchPos;
+	servo[leftServo] = leftLaunchPos;
+
+	wait1Msec(500);
+
+	motor[armMotor] = 100;
+	wait1Msec(800);
+	motor[armMotor] = -12;
+	wait1Msec(1500);
+	motor[armMotor] = 0;
+
+	servo[rightServo] = rightBefore;
+	servo[leftServo] = leftBefore;
+}
+
+
 
 void forwards()
 {
@@ -120,12 +257,6 @@ void backwards()
 
 task main()
 {
-
-
-
-
-
-
 	ClearTimer(T1);
 	ClearTimer(T2);
 	ClearTimer(T3);
@@ -156,23 +287,62 @@ task main()
 			motor[rightWheel] = 0;
 		}
 
+		if(joystick.joy1_TopHat = 1)
+		{
+			if(bigBalls == true)
+			{
+				bigBalls = false;
+			}	
+			else
+			{
+				bigBalls = true;
+			}	
+		}	
 
 		if (joy1Btn(9))
 		{
-			adjustDistanceToSmall();
-			throw();
+			if(bigBalls == true)
+			{
+				adjustDistanceToSmallUsingLarge();
+				throwBig();
+			}	
+			else
+			{
+				adjustDistanceToSmallUsingSmall();
+				throwSmall();
+			}	
+			
+			
 		}
 
 		 if (joy1Btn(3))
 		{
-			adjustDistancetoMedium();
-			throw();
+			if(bigBalls == true)
+			{
+				adjustDistanceToMediumlUsingLarge();
+				throwBig();
+			}	
+			else
+			{
+				adjustDistanceToMediumUsingSmall();
+				throwSmall();
+			}	
+			
 		}
 
 		 if (joy1Btn(4))
 		{
-			adjustDistancetoLarge();
-			throw();
+			if(bigBalls == true)
+			{
+				adjustDistanceToLargelUsingLarge();
+				throwBig();
+			}	
+			else
+			{
+				adjustDistanceToLargeUsingSmall();
+				throwSmall();
+			}	
+			
 		}
 
 		 if (joy1Btn(8))
@@ -199,9 +369,6 @@ task main()
 			}
 			ClearTimer(T2);
 		}
-
-
-
 
 
 		}
