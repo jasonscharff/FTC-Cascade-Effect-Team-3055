@@ -1,8 +1,6 @@
 #pragma config(Hubs,  S1, HTMotor,  HTMotor,  HTServo,  none)
 #pragma config(Hubs,  S2, HTServo,  none,     none,     none)
-#pragma config(Sensor, S1,     ,               sensorI2CMuxController)
-#pragma config(Sensor, S2,     ,               sensorI2CMuxController)
-#pragma config(Sensor, S3,     ultrasonicSensor, sensorSONAR)
+#pragma config(Sensor, S4,     ultrasonicSensor, sensorSONAR)
 #pragma config(Motor,  mtr_S1_C1_1,     leftWheel,     tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C1_2,     rightWheel,    tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C2_1,     armMotor,      tmotorTetrix, openLoop)
@@ -57,9 +55,9 @@ const int small_small_Distance = 9;
 const int medium_small_Distance = 9;
 const int large_small_Distance = 9;
 
-const int small_large_Distance = 9;
-const int medium_large_Distance = 9;
-const int large_large_Distance = 9;
+const int small_large_Distance =  40;
+const int medium_large_Distance = 40;
+const int large_large_Distance =  40;
 
 const int hookUp = 210;
 
@@ -221,6 +219,7 @@ void throwBig()
 	int leftBefore = servo[leftServo];
 
 	servo[rightServo] = rightLaunchPos;
+	servo[armServo] = downArm;
 	servo[leftServo] = leftLaunchPos;
 
 	wait1Msec(500);
@@ -242,6 +241,7 @@ void throwSmall()
 	int leftBefore = servo[leftServo];
 
 	servo[rightServo] = rightLaunchPos;
+	servo[armServo] = downArm;
 	servo[leftServo] = leftLaunchPos;
 
 	wait1Msec(500);
