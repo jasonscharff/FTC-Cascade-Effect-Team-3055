@@ -61,8 +61,9 @@ const int large_large_Distance =  40;
 
 const int hookUp = 210;
 
-const int lockVal = 10;
+const int hookDown = 10;
 
+int count = 0;
 
 bool turnSpinner = false;
 bool bigBalls = true;
@@ -237,6 +238,7 @@ void throwBig()
 //NOT EDITED AT ALL
 void throwSmall()
 {
+	writeDebugStreamLine("IN SMALL");
 	int rightBefore = servo[rightServo];
 	int leftBefore = servo[leftServo];
 
@@ -246,11 +248,12 @@ void throwSmall()
 
 	wait1Msec(500);
 
-	motor[armMotor] = 100;
+	motor[armMotor] = 20;
 	wait1Msec(800);
 	motor[armMotor] = -12;
 	wait1Msec(1500);
 	motor[armMotor] = 0;
+	wait1Msec(250);
 
 	servo[rightServo] = rightBefore;
 	servo[leftServo] = leftBefore;
@@ -329,9 +332,26 @@ initializeRobot();
 
 		}
 
+		if(joystick.joy1_TopHat == 4)
+	{
+			if (count > 150)
+		{
+			if(servo[hookServo] == hookUp)
+		  {
+				servo[hookServo] = hookDown;
+	    }
+	    else
+	   {
+	  	servo[hookServo] = hookUp;
+	   }
+	  }
+}
+else
+{
+	count++;
+}
 		if(joystick.joy1_TopHat == 6)
 	 {
-	   writeDebugStreamLine("MY PLACE");
 		servo[armServo] = downArm;
    }
 
